@@ -16,6 +16,15 @@ export function Header() {
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
+  const scrollTo = (href: string) => (e: React.MouseEvent<HTMLAnchorElement>) => {
+    const el = document.querySelector(href);
+    if (!el) return;
+    e.preventDefault();
+    const top = el.getBoundingClientRect().top + window.scrollY - 76;
+    window.scrollTo({ top, behavior: "smooth" });
+    setOpen(false);
+  };
+
   return (
     <header
       className={`fixed inset-x-0 top-0 z-50 transition-all duration-500 ${
