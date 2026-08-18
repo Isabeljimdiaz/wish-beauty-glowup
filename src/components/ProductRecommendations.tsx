@@ -1,11 +1,19 @@
 import { useMemo, useState } from "react";
 
-import { categories, products, type Category } from "@/data/products";
+import { categories, products, type Category, type Product } from "@/data/products";
 import { formatMXN } from "@/lib/recommender";
 import { Button } from "@/components/ui/button";
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogHeader,
+  DialogTitle,
+} from "@/components/ui/dialog";
 
 export function ProductRecommendations() {
   const [active, setActive] = useState<Category | "Todos">("Todos");
+  const [selected, setSelected] = useState<Product | null>(null);
 
   const visible = useMemo(
     () => (active === "Todos" ? products : products.filter((p) => p.category === active)),
@@ -74,8 +82,8 @@ export function ProductRecommendations() {
                     ${formatMXN(p.price)}{" "}
                     <span className="text-xs text-muted-foreground">MXN aprox.</span>
                   </p>
-                  <Button asChild variant="soft" size="sm">
-                    <a href="#encuentra">Ver recomendación</a>
+                  <Button variant="soft" size="sm" onClick={() => setSelected(p)}>
+                    Ver recomendación
                   </Button>
                 </div>
               </div>
@@ -86,6 +94,73 @@ export function ProductRecommendations() {
         <p className="mt-8 text-center text-xs text-muted-foreground">
           Los precios son aproximados y pueden variar según el punto de venta.
         </p>
+
+        <Dialog open={!!selected} onOpenChange={(o) => !o && setSelected(null)}>
+          <DialogContent className="max-h-[90vh] overflow-y-auto sm:max-w-lg">
+            {selected && (
+              <>
+                <img
+                  src={selected.image}
+                  alt={`${selected.name} de ${selected.brand}`}
+                  className="h-44 w-full rounded-2xl object-cover"
+                />
+                <DialogHeader className="text-left">
+                  <p className="eyebrow">{selected.category}</p>
+                  <DialogTitle className="font-display text-3xl leading-snug">
+                    {selected.name}
+                  </DialogTitle>
+                  <DialogDescription>{selected.brand}</DialogDescription>
+                </DialogHeader>
+
+                <div className="flex items-center justify-between gap-3 rounded-2xl bg-secondary px-4 py-3">
+                  <span className="font-display text-2xl text-foreground">
+                    ${formatMXN(selected.price)}{" "}
+                    <span className="text-xs text-muted-foreground">MXN aprox.</span>
+                  </span>
+                  <span className="text-gold text-xs tracking-[0.16em] uppercase">
+                    {selected.priceLevel}
+                  </span>
+                </div>
+
+                <p className="text-sm leading-relaxed text-muted-foreground">
+                  {selected.description}
+                </p>
+
+                {selected.benefits?.length ? (
+                  <div>
+                    <h4 className="font-display text-xl text-foreground">Beneficios</h4>
+                    <ul className="mt-2 space-y-1.5">
+                      {selected.benefits.map((b) => (
+                        <li
+                          key={b}
+                          className="flex gap-2 text-sm leading-relaxed text-muted-foreground"
+                        >
+                          <span className="text-gold">•</span>
+                          {b}
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                ) : null}
+
+                {selected.usage ? (
+                  <div>
+                    <h4 className="font-display text-xl text-foreground">Modo de uso</h4>
+                    <p className="mt-2 text-sm leading-relaxed text-muted-foreground">
+                      {selected.usage}
+                    </p>
+                  </div>
+                ) : null}
+
+                <Button asChild variant="gold" className="mt-2">
+                  <a href="#encuentra" onClick={() => setSelected(null)}>
+                    Armar mi kit con mi presupuesto
+                  </a>
+                </Button>
+              </>
+            )}
+          </DialogContent>
+        </Dialog>
       </div>
     </section>
   );
