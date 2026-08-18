@@ -39,6 +39,10 @@ export type Product = {
   price: number;
   priceLevel: PriceLevel;
   description: string;
+  /** Beneficios clave (editable). */
+  benefits?: string[];
+  /** Modo de uso (editable). */
+  usage?: string;
   image: string;
 };
 
@@ -71,6 +75,8 @@ const raw: Omit<Product, "image">[] = [
     price: 85,
     priceLevel: "Súper accesible",
     description: "Limpia sin resecar y deja la piel lista antes del maquillaje.",
+    benefits: ["Limpia sin resecar", "Retira maquillaje ligero", "Apta para piel sensible"],
+    usage: "Aplica con un algodón sobre el rostro limpio antes de tu rutina, sin frotar.",
   },
   {
     id: "skincare-hidratante",
@@ -80,6 +86,8 @@ const raw: Omit<Product, "image">[] = [
     price: 110,
     priceLevel: "Accesible",
     description: "Textura ligera que hidrata y ayuda a que la base se adhiera mejor.",
+    benefits: ["Hidratación ligera", "Mejor adherencia de la base", "No deja sensación grasosa"],
+    usage: "Aplica una capa fina en rostro y cuello después de limpiar, antes del primer.",
   },
   {
     id: "primer-matificante",
@@ -89,6 +97,8 @@ const raw: Omit<Product, "image">[] = [
     price: 95,
     priceLevel: "Súper accesible",
     description: "Suaviza la textura de la piel y prolonga la duración del maquillaje.",
+    benefits: ["Controla el brillo", "Suaviza poros y textura", "Prolonga la duración"],
+    usage: "Coloca una capa delgada en zona T y deja secar 1 minuto antes de la base.",
   },
   {
     id: "base-hd",
@@ -98,6 +108,8 @@ const raw: Omit<Product, "image">[] = [
     price: 120,
     priceLevel: "Accesible",
     description: "Acabado natural, buildable y con variedad de tonos.",
+    benefits: ["Cobertura media buildable", "Acabado natural", "Variedad de tonos"],
+    usage: "Aplica por capas con esponja húmeda desde el centro del rostro hacia afuera.",
   },
   {
     id: "base-matte",
@@ -107,6 +119,8 @@ const raw: Omit<Product, "image">[] = [
     price: 165,
     priceLevel: "Accesible",
     description: "Ideal para pieles mixtas o grasas que buscan control de brillo.",
+    benefits: ["Larga duración", "Control de brillo", "Ideal para piel mixta o grasa"],
+    usage: "Aplica en pequeñas cantidades con brocha y sella con polvo traslúcido.",
   },
   {
     id: "corrector-liquido",
@@ -116,6 +130,8 @@ const raw: Omit<Product, "image">[] = [
     price: 90,
     priceLevel: "Súper accesible",
     description: "Cubre ojeras e imperfecciones sin marcar líneas de expresión.",
+    benefits: ["Alta cobertura", "No marca líneas", "Ilumina la mirada"],
+    usage: "Coloca en triángulo invertido bajo el ojo, difumina con esponja y sella con polvo.",
   },
   {
     id: "rubor-compacto",
@@ -125,6 +141,8 @@ const raw: Omit<Product, "image">[] = [
     price: 100,
     priceLevel: "Accesible",
     description: "Pigmentación suave y fácil de difuminar para un rubor natural.",
+    benefits: ["Pigmentación graduable", "Fácil de difuminar", "Acabado satinado"],
+    usage: "Toma poco producto con brocha, difumina en las mejillas hacia la sien.",
   },
   {
     id: "iluminador-polvo",
@@ -134,6 +152,8 @@ const raw: Omit<Product, "image">[] = [
     price: 105,
     priceLevel: "Accesible",
     description: "Brillo elegante, sin destacar textura ni poros.",
+    benefits: ["Brillo elegante", "No resalta textura", "Rinde mucho"],
+    usage: "Aplica en el arco de la ceja, puente de la nariz y parte alta del pómulo.",
   },
   {
     id: "contorno-crema",
@@ -143,6 +163,8 @@ const raw: Omit<Product, "image">[] = [
     price: 115,
     priceLevel: "Accesible",
     description: "Tono neutro para esculpir el rostro de forma sutil.",
+    benefits: ["Tono neutro", "Esculpe sutilmente", "Se funde con la base"],
+    usage: "Aplica bajo el pómulo y mandíbula; difumina hacia arriba con esponja húmeda.",
   },
   {
     id: "sombras-neutras",
@@ -152,6 +174,8 @@ const raw: Omit<Product, "image">[] = [
     price: 180,
     priceLevel: "Vale la inversión",
     description: "Mates y satinados versátiles para looks de día y de noche.",
+    benefits: ["Mates y satinados", "Alta pigmentación", "Versátil día y noche"],
+    usage: "Empieza con un tono transición en la cuenca, luego profundiza el ángulo externo.",
   },
   {
     id: "labial-mate",
@@ -161,6 +185,8 @@ const raw: Omit<Product, "image">[] = [
     price: 70,
     priceLevel: "Súper accesible",
     description: "Un clásico mexicano: pigmentado, cómodo y muy duradero.",
+    benefits: ["Muy duradero", "Cómodo en labios", "Color intenso"],
+    usage: "Delinea el contorno y rellena desde el centro; retoca con un pañuelo.",
   },
   {
     id: "gloss-nude",
@@ -170,6 +196,8 @@ const raw: Omit<Product, "image">[] = [
     price: 65,
     priceLevel: "Súper accesible",
     description: "Acabado jugoso que combina con cualquier maquillaje.",
+    benefits: ["Acabado jugoso", "Combina con todo", "Sensación hidratante"],
+    usage: "Aplica solo o encima de tu labial mate para un efecto luminoso.",
   },
   {
     id: "mascara-volumen",
@@ -179,6 +207,8 @@ const raw: Omit<Product, "image">[] = [
     price: 80,
     priceLevel: "Súper accesible",
     description: "Levanta y da volumen sin grumos desde la primera capa.",
+    benefits: ["Volumen inmediato", "Sin grumos", "Efecto lifting"],
+    usage: "Aplica en zigzag desde la raíz; agrega una segunda capa antes de que seque.",
   },
   {
     id: "protector-solar",
@@ -188,6 +218,8 @@ const raw: Omit<Product, "image">[] = [
     price: 145,
     priceLevel: "Accesible",
     description: "Paso indispensable de día, incluso debajo del maquillaje.",
+    benefits: ["FPS 50", "Previene manchas", "Base ideal para maquillaje"],
+    usage: "Aplica cada mañana como último paso de skincare y reaplica cada 3-4 horas.",
   },
 ];
 
