@@ -34,7 +34,7 @@ export function Header() {
       }`}
     >
       <div className="mx-auto flex max-w-7xl items-center justify-between gap-4 px-5 py-3 lg:px-8">
-        <a href="#inicio" className="flex items-center gap-3" aria-label="Wish Beauty — Inicio">
+        <a href="#inicio" onClick={scrollTo("#inicio")} className="flex items-center gap-3" aria-label="Wish Beauty — Inicio">
           <img
             src={logo}
             alt="Logotipo de Wish Beauty"
@@ -52,6 +52,7 @@ export function Header() {
             <a
               key={item.href}
               href={item.href}
+              onClick={scrollTo(item.href)}
               className="rounded-full px-3 py-2 text-sm text-muted-foreground transition-colors hover:bg-secondary hover:text-foreground"
             >
               {item.label}
@@ -61,7 +62,9 @@ export function Header() {
 
         <div className="flex items-center gap-2">
           <Button asChild variant="gold" size="sm" className="hidden md:inline-flex">
-            <a href="#masterclass">Masterclass</a>
+            <a href="#masterclass" onClick={scrollTo("#masterclass")}>
+              Masterclass
+            </a>
           </Button>
           <button
             type="button"
@@ -82,7 +85,7 @@ export function Header() {
               <li key={item.href}>
                 <a
                   href={item.href}
-                  onClick={() => setOpen(false)}
+                  onClick={scrollTo(item.href)}
                   className="block border-b border-border/50 py-3 text-base text-foreground/85 transition-colors hover:text-primary"
                 >
                   {item.label}
